@@ -1,4 +1,4 @@
-.PHONY: cm setup sync audit install reinstall get_shasum list
+.PHONY: cm setup install-all uninstall teardown sync audit install reinstall get_shasum list
 
 OLLAMA_MODEL ?= qwen2.5-coder:7b
 OLLAMA_HOST ?= http://localhost:11434
@@ -11,8 +11,24 @@ FORMULAE := $(patsubst Formula/%.rb,%,$(wildcard Formula/*.rb))
 setup:
 	@brew tap | grep -Fxq "$(TAP)" || brew tap-new --no-git "$(TAP)"
 	@brew trust "$(TAP)"
-	@mkdir -p "$(TAP_PATH)/Formula"
 	@$(MAKE) sync
+	@$(MAKE) install-all
+
+install-all: sync
+	@set -e; for formula in $(FORMULAE); do \
+		echo "==> Installing $$formula"; \
+		brew install --build-from-source "$(TAP)/$$formula"; \
+	done
+
+uninstall:
+	@set -e; for formula in $(FORMULAE); do \
+		if brew list --formula "$$formula" >/dev/null 2>&1; then \
+			echo "==> Uninstalling $$formula"; \
+			brew uninstall "$$formula"; \
+		fi; \
+	done
+
+teardown: uninstall clean
 
 sync:
 	@mkdir -p "$(TAP_PATH)/Formula"
@@ -38,6 +54,12 @@ get_shasum:
 	@curl -sSL "https://github.com/efeligne/$(REPOSITORY)/archive/refs/tags/v$(VERSION).tar.gz" \
 		| shasum -a 256 \
 		| awk '{print "$(REPOSITORY) ($(VERSION)): " $$1}'
+
+clean:
+	@for formula in $(FORMULAE); do \
+		rm -f "$(TAP_PATH)/Formula/$$formula.rb"; \
+	done
+	@rmdir "$(TAP_PATH)/Formula" 2>/dev/null || true
 
 list:
 	@printf '%s\n' $(FORMULAE)
