@@ -1,4 +1,4 @@
-# brew-tools
+# homebrew-tools
 
 A personal [Homebrew](https://brew.sh/) tap for macOS command-line tools.
 
