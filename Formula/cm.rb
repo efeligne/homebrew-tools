@@ -8,6 +8,7 @@ class Cm < Formula
   sha256 "e3e0bb20029cc98e2d60f3ffd71e56d56bde173d362e488ce9d0336070997ead"
   license "MIT"
 
+  depends_on "rust" => :build
   deny_network_access!
 
   def install
