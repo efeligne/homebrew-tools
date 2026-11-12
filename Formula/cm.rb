@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Generates Git commit message.
-class CM < Formula
+class Cm < Formula
   desc "cm generates Git commit messages from staged changes using a local MLX model."
   homepage "https://github.com/efeligne/cm"
   url "https://github.com/efeligne/cm/archive/refs/tags/v0.1.2.tar.gz"
