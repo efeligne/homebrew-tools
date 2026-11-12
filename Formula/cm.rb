@@ -9,7 +9,6 @@ class Cm < Formula
   license "MIT"
 
   depends_on "rust" => :build
-  deny_network_access!
 
   def install
     system "make", "release"
