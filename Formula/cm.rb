@@ -4,8 +4,8 @@
 class Cm < Formula
   desc "cm generates Git commit messages from staged changes using a local MLX model."
   homepage "https://github.com/efeligne/cm"
-  url "https://github.com/efeligne/cm/archive/refs/tags/v0.1.2.tar.gz"
-  sha256 "e3e0bb20029cc98e2d60f3ffd71e56d56bde173d362e488ce9d0336070997ead"
+  url "https://github.com/efeligne/cm/archive/refs/tags/v0.1.3.tar.gz"
+  sha256 "85251af5c160c333d4d17d77ae9edba4e7559a4849148f0bc871328f39e7dc8c"
   license "MIT"
 
   depends_on "rust" => :build
